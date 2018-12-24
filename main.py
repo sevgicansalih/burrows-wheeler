@@ -13,15 +13,22 @@ class BWT():
 		for i in range(length):
 			string = string[-1] + string[0:length-1]
 			suffix_array.append(string)
-		return suffix_array
+		sorted_suffix = sorted(suffix_array)
+		result = ''
+		for suffix in sorted_suffix:
+			result += suffix[-1]
+		return result
 
 	def inverse_transform(self):
 		string = self.string
 
 
 def main():
-	bwt = BWT('banana')
-	print(bwt.transform())
+	bwt = BWT('GCGTGCCTGGTCA$')
+	t = bwt.transform()
+	print(t)
+	res = 'ACTGGCT$TGCGGC'
+	print (res == t)
 
 if __name__ == '__main__':
 	main()
