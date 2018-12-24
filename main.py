@@ -13,10 +13,14 @@ class BWT():
 		string = self.string
 		length = len(string)
 		suffix_array = []
+		# calculate suffix array
 		for i in range(length):
 			string = string[-1] + string[0:length-1]
 			suffix_array.append(string)
+		# sort them
 		sorted_suffix = sorted(suffix_array)
+		
+		#get the last elements of suffix array
 		result = ''
 		for suffix in sorted_suffix:
 			result += suffix[-1]
@@ -27,17 +31,24 @@ class BWT():
 		if '$' not in string:
 			return 'No dollar sign detected, terminated.'
 		length = len(string)
+
+		# creates empty table
 		df = pd.DataFrame()
 		df['original'] = list(string)
-		#print(df)
-		#df.set_index(list(string),inplace=True)
+		# iterates and adds original index everytime, than sorts them
 		for i in range(length):
 			df[i] = list(string)
 			df.set_index(i,inplace=True)
 			df.sort_index(inplace = True)
 			df.reset_index(inplace = True)
+
+		# deleting excessive column
 		df.drop('original',axis = 1,inplace = True)
+
+		# get the row ends with $ sign
 		df = df[df[0] =='$']
+
+		# convert to string from dataframe object
 		result = ''
 		for col in df:
 			if col != 'index':
